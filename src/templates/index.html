@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html>
+    <html lang>
         <head>
             <title>Car park status</title>
             <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -8,11 +8,9 @@
                 $(document).ready(function(){
                 //connect to the socket server.
                 var socket = io.connect('http://' + document.domain + ':' + location.port + '/data');
-                var numbers_received = [];
 
                 //receive details from server
                 socket.on('carParkStatus', function(msg) {    
-                    numbers_received.push(msg.number);
                     $('#status_sensor_1').html(`Status sensor 1: ${msg.status_sensor_1}`);
                     $('#status_sensor_2').html(`Status sensor 2: ${msg.status_sensor_2}`);
                     $('#car_number').html(`Car Number: ${msg.car_number}`);

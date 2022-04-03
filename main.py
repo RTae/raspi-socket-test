@@ -1,9 +1,8 @@
+from src.controllers.carParkController import check_car_status
 from flask import Flask, render_template
 from flask_socketio import SocketIO
-from threading import Thread, Event
-from random import random
-
-__author__ = 'rtae'
+from threading import Thread
+import logging
 
 app = Flask(__name__, template_folder='src/templates')
 app.config['SECRET_KEY'] = 'secret!'
@@ -13,20 +12,6 @@ socketio = SocketIO(app, async_mode=None)
 
 #random number Generator Thread
 thread = Thread()
-thread_stop_event = Event()
-
-def check_car_status():
-    """
-    Check car park status from RPIO and sent it through socket
-    Ideally to be run in a separate thread?
-    """
-    #infinite loop of magical random numbers
-    while not thread_stop_event.isSet():
-        number_car = round(random()*10, 0)
-        socketio.emit('carParkStatus',
-            {'status_sensor_1': 'AAAA', 'status_sensor_2': 'BBBB','car_number':number_car},
-            namespace='/data')
-        socketio.sleep(1)
 
 @app.route('/')
 def index():
@@ -37,16 +22,16 @@ def index():
 def test_connect():
     # need visibility of the global thread object
     global thread
-    print('Client connected')
+    logging.info('Client connected')
 
-    #Start the random number generator thread only if the thread has not been started before.
+    #Start the thread only if the thread has not been started before.
     if not thread.is_alive():
-        print("Starting Thread")
-        thread = socketio.start_background_task(check_car_status)
+        logging.info("Starting Thread")
+        thread = socketio.start_background_task(check_car_status, socketio)
 
 @socketio.on('disconnect', namespace='/data')
 def test_disconnect():
-    print('Client disconnected')
+    logging.info('Client disconnected')
 
 if __name__ == '__main__':
     socketio.run(app)
