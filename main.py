@@ -23,9 +23,10 @@ def check_car_status():
     #infinite loop of magical random numbers
     while not thread_stop_event.isSet():
         number_car = round(random()*10, 0)
-        socketio.emit('carParkStatus', {'status_sensor_1': 'AAAA', 'status_sensor_2': 'BBBB','car_number':number_car}, namespace='/data')
+        socketio.emit('carParkStatus',
+            {'status_sensor_1': 'AAAA', 'status_sensor_2': 'BBBB','car_number':number_car},
+            namespace='/data')
         socketio.sleep(1)
-
 
 @app.route('/')
 def index():

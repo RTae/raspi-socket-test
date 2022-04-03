@@ -1,6 +1,6 @@
 # Raspi-socket-test
 
-## How to start this project
+## :gear: How to start this project
 please make sure you have environment control from python suc as pipenv, conda and etc
 
 1. Install package dependency
