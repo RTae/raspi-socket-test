@@ -1,5 +1,5 @@
 from src.services.carParkService import CarParkService
-from threading import Thread, Event
+from threading import Event
 
 cps = CarParkService()
 thread_stop_event = Event()
