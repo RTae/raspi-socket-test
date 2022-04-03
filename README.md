@@ -1,9 +1,9 @@
 # Raspi-socket-test
 
 ## :gear: How to start this project
-please make sure you have environment control from python suc as pipenv, conda and etc
+Please make sure you have environment control tools for python such as Pipenv, Conda and etc
 
-1. Install package dependency
+1. Install package dependency by using command below
 ```
 pip install -r requirements.txt
 ```
